@@ -1,6 +1,7 @@
 <!--index.wxml-->
 <view class="container">
 
-  <canvas style="width: 300px; height: 300px;" canvas-id="myCanvas"></canvas>
+  <canvas style="width: 300px; height: 300px;" canvas-id="myCanvas" reserve="true"></canvas>
   <button bindtap="canvers">上传</button>
+  <button bindtap="save">预览</button>
 </view>

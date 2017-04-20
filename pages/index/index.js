@@ -4,7 +4,8 @@ var app = getApp()
 Page({
   data: {
     motto: 'Hello World',
-    userInfo: {}
+    userInfo: {},
+    src: ''
   },
   //事件处理函数
   bindViewTap: function () {
@@ -14,23 +15,29 @@ Page({
   },
   onLoad: function () {
     console.log('onLoad')
-    var that = this
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
   },
-  canvers: () => {
-    const ctx = wx.createCanvasContext('myCanvas')
-
+  canvers: function () {
     wx.chooseImage({
       success: function (res) {
-        ctx.drawImage(res.tempFilePaths[0], 0, 0, 300, 300)
-        ctx.moveTo(100, 100)
-        ctx.draw()
+        const ctx = wx.createCanvasContext('myCanvas')
+
+        ctx.drawImage(res.tempFilePaths[0], 0, 0, 200, 200)
+       ctx.draw() 
+        ctx.drawImage('card.png', 190, 190, 30, 30)
+        ctx.draw(true) 
+      }
+    })
+  },
+  save: function () {
+    let self = this
+    wx.canvasToTempFilePath({
+      canvasId: 'myCanvas',
+      success: function (res) {
+        console.log(res.tempFilePath)
+        wx.previewImage({
+          current: res.tempFilePath, // 当前显示图片的http链接
+          urls: [res.tempFilePath] // 需要预览的图片http链接列表
+        })
       }
     })
   }
